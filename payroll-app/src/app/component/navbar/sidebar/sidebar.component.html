@@ -1,0 +1,44 @@
+<div class="sidebar">
+  <!-- Logo Section -->
+  <div class="sidebar-header">
+    <div class="logo">
+      <i class="bi bi-safe"></i>
+      <span class="logo-text">My-Task</span>
+    </div>
+  </div>
+
+  <!-- Menu Items -->
+  <div class="sidebar-menu">
+    <div *ngFor="let item of menuItems" class="menu-item-container">
+      <!-- Parent Menu Item -->
+      <div class="menu-item"
+           [class.active]="item.route && isActive(item.route)"
+           [class.has-children]="item.children"
+           (click)="toggleMenu(item)">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+        <i *ngIf="item.children"
+           class="bi expand-icon"
+           [ngClass]="item.expanded ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+      </div>
+
+      <!-- Submenu Items -->
+      <div class="submenu" *ngIf="item.children && item.expanded">
+        <div *ngFor="let child of item.children"
+             class="submenu-item"
+             [class.active]="child.route && isActive(child.route)"
+             (click)="toggleMenu(child)">
+          <i class="bi" [ngClass]="child.icon"></i>
+          <span>{{ child.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <div class="back-button" [routerLink]="['/']">
+      <i class="bi bi-arrow-left"></i>
+    </div>
+  </div>
+</div>

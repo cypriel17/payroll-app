@@ -1,0 +1,544 @@
+<ng-container
+  *ngIf="employeeState$ | async as state"
+  [ngSwitch]="state.dataState"
+>
+  <ng-container *ngSwitchCase="DataState.LOADED">
+    <app-navbar [user]="state?.appData?.data?.user"></app-navbar>
+
+    <section>
+      <div class="container">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" style="margin-top: 8px">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/']">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/employees']">Employees</a>
+            </li>
+            <li class="breadcrumb-item active">
+              {{ state?.appData?.data?.employee.firstName }}
+              {{ state?.appData?.data?.employee.lastName }}
+            </li>
+          </ol>
+        </nav>
+
+        <!-- Employee Header Card -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="employee-profile-card">
+              <div class="profile-header">
+                <div class="profile-avatar-section">
+                  <div class="profile-avatar-container">
+                    <img
+                      *ngIf="state?.appData?.data?.employee.imageUrl"
+                      [src]="state?.appData?.data?.employee.imageUrl"
+                      [alt]="
+                        state?.appData?.data?.employee.firstName +
+                        ' ' +
+                        state?.appData?.data?.employee.lastName
+                      "
+                      class="profile-avatar"
+                    />
+                    <div
+                      *ngIf="!state?.appData?.data?.employee.imageUrl"
+                      class="profile-avatar-initials"
+                    >
+                      {{
+                        getInitials(
+                          state?.appData?.data?.employee.firstName,
+                          state?.appData?.data?.employee.lastName
+                        )
+                      }}
+                    </div>
+                    <label for="photoInput" class="upload-photo-btn">
+                      <i class="bi bi-camera"></i>
+                    </label>
+                    <input
+                      type="file"
+                      id="photoInput"
+                      accept="image/*"
+                      style="display: none"
+                      (change)="updatePhoto($event)"
+                    />
+                  </div>
+                </div>
+                <div class="profile-info-section">
+                  <h2 class="employee-name">
+                    {{ state?.appData?.data?.employee.firstName }}
+                    {{ state?.appData?.data?.employee.lastName }}
+                  </h2>
+                  <p class="employee-title">
+                    {{ state?.appData?.data?.employee.designationTitle || 'No Designation' }}
+                  </p>
+                  <div class="employee-meta">
+                    <span class="badge bg-primary me-2">
+                      {{ state?.appData?.data?.employee.employeeId || 'N/A' }}
+                    </span>
+                    <span
+                      class="badge"
+                      [ngClass]="{
+                        'bg-success': state?.appData?.data?.employee.status === 'ACTIVE',
+                        'bg-danger': state?.appData?.data?.employee.status === 'TERMINATED',
+                        'bg-warning': state?.appData?.data?.employee.status === 'ON_LEAVE',
+                        'bg-info': state?.appData?.data?.employee.status === 'PROBATION',
+                        'bg-secondary': state?.appData?.data?.employee.status === 'INACTIVE'
+                      }"
+                    >
+                      {{ state?.appData?.data?.employee.status }}
+                    </span>
+                  </div>
+                </div>
+                <div class="profile-actions">
+                  <button class="btn btn-outline-danger" (click)="deleteEmployee()">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Employee Details Tabs -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <ul class="nav nav-tabs" id="employeeTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="overview-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#overview"
+                  type="button"
+                  role="tab"
+                >
+                  <i class="bi bi-person-circle"></i> Overview
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="edit-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#edit"
+                  type="button"
+                  role="tab"
+                >
+                  <i class="bi bi-pencil-square"></i> Edit Details
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="documents-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#documents"
+                  type="button"
+                  role="tab"
+                >
+                  <i class="bi bi-file-earmark-text"></i> Documents
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="employeeTabContent">
+              <!-- Overview Tab -->
+              <div
+                class="tab-pane fade show active"
+                id="overview"
+                role="tabpanel"
+              >
+                <div class="card mt-3">
+                  <div class="card-body">
+                    <h5 class="card-title mb-4">Personal Information</h5>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Email</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.email }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Phone</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.phone || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Date of Birth</label>
+                        <p class="fw-bold">
+                          {{ formatDate(state?.appData?.data?.employee.dateOfBirth) }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Gender</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.gender || 'N/A' }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <h5 class="card-title mb-4">Employment Information</h5>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Department</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.departmentName || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Designation</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.designationTitle || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Hire Date</label>
+                        <p class="fw-bold">
+                          {{ formatDate(state?.appData?.data?.employee.hireDate) }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Employment Type</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.employmentType }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Base Salary</label>
+                        <p class="fw-bold">
+                          R {{ state?.appData?.data?.employee.baseSalary?.toLocaleString() || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Manager</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.managerName || 'N/A' }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <h5 class="card-title mb-4">Address Information</h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="text-muted">Street Address</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.address || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">City</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.city || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">State/Province</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.state || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Country</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.country || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Postal Code</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.postalCode || 'N/A' }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <h5 class="card-title mb-4">Emergency Contact</h5>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Contact Name</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.emergencyContactName || 'N/A' }}
+                        </p>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Contact Phone</label>
+                        <p class="fw-bold">
+                          {{ state?.appData?.data?.employee.emergencyContactPhone || 'N/A' }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr *ngIf="state?.appData?.data?.employee.bio" />
+
+                    <div *ngIf="state?.appData?.data?.employee.bio">
+                      <h5 class="card-title mb-3">Bio</h5>
+                      <p>{{ state?.appData?.data?.employee.bio }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Edit Tab -->
+              <div class="tab-pane fade" id="edit" role="tabpanel">
+                <div class="card mt-3">
+                  <div class="card-body">
+                    <h5 class="card-title mb-4">Edit Employee Details</h5>
+                    <form
+                      #employeeForm="ngForm"
+                      (ngSubmit)="updateEmployee(employeeForm)"
+                    >
+                      <!-- Personal Information -->
+                      <h6 class="mb-3">Personal Information</h6>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="firstName" class="form-label">First Name *</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="firstName"
+                            name="firstName"
+                            [(ngModel)]="state.appData.data.employee.firstName"
+                            required
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="lastName" class="form-label">Last Name *</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="lastName"
+                            name="lastName"
+                            [(ngModel)]="state.appData.data.employee.lastName"
+                            required
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="email" class="form-label">Email *</label>
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            [(ngModel)]="state.appData.data.employee.email"
+                            required
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="phone" class="form-label">Phone</label>
+                          <input
+                            type="tel"
+                            class="form-control"
+                            id="phone"
+                            name="phone"
+                            [(ngModel)]="state.appData.data.employee.phone"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="dateOfBirth"
+                            name="dateOfBirth"
+                            [(ngModel)]="state.appData.data.employee.dateOfBirth"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="gender" class="form-label">Gender</label>
+                          <select
+                            class="form-control"
+                            id="gender"
+                            name="gender"
+                            [(ngModel)]="state.appData.data.employee.gender"
+                          >
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <hr />
+
+                      <!-- Address Information -->
+                      <h6 class="mb-3">Address Information</h6>
+                      <div class="row">
+                        <div class="col-12 mb-3">
+                          <label for="address" class="form-label">Street Address</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="address"
+                            name="address"
+                            [(ngModel)]="state.appData.data.employee.address"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="city" class="form-label">City</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="city"
+                            name="city"
+                            [(ngModel)]="state.appData.data.employee.city"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="state" class="form-label">State/Province</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="state"
+                            name="state"
+                            [(ngModel)]="state.appData.data.employee.state"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="country" class="form-label">Country</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="country"
+                            name="country"
+                            [(ngModel)]="state.appData.data.employee.country"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="postalCode" class="form-label">Postal Code</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="postalCode"
+                            name="postalCode"
+                            [(ngModel)]="state.appData.data.employee.postalCode"
+                          />
+                        </div>
+                      </div>
+
+                      <hr />
+
+                      <!-- Emergency Contact -->
+                      <h6 class="mb-3">Emergency Contact</h6>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="emergencyContactName" class="form-label">Contact Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="emergencyContactName"
+                            name="emergencyContactName"
+                            [(ngModel)]="state.appData.data.employee.emergencyContactName"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="emergencyContactPhone" class="form-label">Contact Phone</label>
+                          <input
+                            type="tel"
+                            class="form-control"
+                            id="emergencyContactPhone"
+                            name="emergencyContactPhone"
+                            [(ngModel)]="state.appData.data.employee.emergencyContactPhone"
+                          />
+                        </div>
+                      </div>
+
+                      <hr />
+
+                      <!-- Bio -->
+                      <h6 class="mb-3">Bio</h6>
+                      <div class="row">
+                        <div class="col-12 mb-3">
+                          <label for="bio" class="form-label">Bio</label>
+                          <textarea
+                            class="form-control"
+                            id="bio"
+                            name="bio"
+                            rows="4"
+                            [(ngModel)]="state.appData.data.employee.bio"
+                          ></textarea>
+                        </div>
+                      </div>
+
+                      <div class="text-end">
+                        <button
+                          type="button"
+                          class="btn btn-secondary me-2"
+                          [routerLink]="['/employees']"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          [disabled]="!employeeForm.valid || (isLoading$ | async)"
+                        >
+                          <span
+                            *ngIf="isLoading$ | async"
+                            class="spinner-border spinner-border-sm me-2"
+                          ></span>
+                          Save Changes
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Documents Tab -->
+              <div class="tab-pane fade" id="documents" role="tabpanel">
+                <div class="card mt-3">
+                  <div class="card-body">
+                    <h5 class="card-title mb-4">Employee Documents</h5>
+                    <p class="text-muted">
+                      Document management feature coming soon...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="DataState.LOADING">
+    <div
+      class="d-flex justify-content-center align-items-center"
+      style="min-height: 400px"
+    >
+      <div class="text-center">
+        <div
+          class="spinner-border text-primary"
+          role="status"
+          style="width: 3rem; height: 3rem"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted">Loading employee details...</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="DataState.ERROR">
+    <div class="container mt-5">
+      <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">
+          <i class="bi bi-exclamation-triangle-fill"></i> Error Loading Employee
+        </h4>
+        <p>{{ state.error }}</p>
+        <hr />
+        <button class="btn btn-primary" [routerLink]="['/employees']">
+          <i class="bi bi-arrow-left"></i> Back to Employees
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

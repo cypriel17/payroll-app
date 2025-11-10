@@ -1,0 +1,50 @@
+.app-wrapper {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* Layout with Sidebar and Navbar */
+.main-content {
+  margin-left: 270px; /* Sidebar width */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  flex: 1;
+  padding: 30px;
+  background: #f8fafc;
+  min-height: calc(100vh - 70px); /* Full height minus navbar */
+  overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .content-wrapper {
+    padding: 15px;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

@@ -1,0 +1,26 @@
+<div class="app-wrapper">
+  <!-- Show Sidebar and Navbar only when user is authenticated -->
+  <ng-container *ngIf="isAuthenticated && (user$ | async) as user">
+    <!-- Sidebar -->
+    <app-sidebar [user]="user"></app-sidebar>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Top Navbar -->
+      <app-navbar [user]="user"></app-navbar>
+
+      <!-- Page Content -->
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Show only router-outlet when not authenticated (login/register pages) -->
+  <ng-container *ngIf="!isAuthenticated">
+    <router-outlet></router-outlet>
+  </ng-container>
+
+  <!-- Notifications -->
+  <notifier-container></notifier-container>
+</div>
