@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { DepartmentsComponent } from './department.component';
+import { DepartmentService } from '../../service/department.service';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: DepartmentsComponent
+  }
+];
+
+@NgModule({
+  declarations: [
+    DepartmentsComponent
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgbModule,
+    RouterModule.forChild(routes)
+  ],
+  providers: [
+    DepartmentService
+  ]
+})
+export class DepartmentModule { }

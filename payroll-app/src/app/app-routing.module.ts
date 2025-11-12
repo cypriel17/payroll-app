@@ -25,6 +25,11 @@ const routes: Routes = [
     component: AttendanceListComponent
   },
   {
+    path: 'departments',
+    loadChildren: () => import('./component/department/department.module')
+      .then(m => m.DepartmentModule)
+  },
+  {
     path: 'employee/leave',
     component: EmployeeLeaveComponent,
     canActivate: [AuthenticationGuard],

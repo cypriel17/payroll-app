@@ -1,0 +1,143 @@
+.department-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #e0e0e0;
+}
+
+.department-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.department-card .dropdown-toggle::after {
+  display: none;
+}
+
+.department-card .btn-link {
+  padding: 0.25rem 0.5rem;
+  text-decoration: none;
+}
+
+.department-card .btn-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+/* Stats styling */
+.department-card .fw-medium {
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.department-card .small {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Search bar */
+.input-group .btn-outline-secondary {
+  border-color: #ced4da;
+}
+
+.input-group .btn-outline-secondary:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+/* Modal styling */
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.modal-title {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Form validation */
+.invalid-feedback {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Loading state */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Empty state */
+.bi-building {
+  opacity: 0.3;
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: #495057;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .department-card {
+    margin-bottom: 1rem;
+  }
+
+  .pagination {
+    font-size: 0.875rem;
+  }
+
+  .pagination .page-item {
+    margin: 0 2px;
+  }
+}
+
+/* Delete modal backdrop */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Alert styling */
+.alert {
+  border-radius: 8px;
+}
+
+/* Card hover effects */
+.card {
+  border-radius: 8px;
+}
+
+/* Button styling */
+.btn {
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
