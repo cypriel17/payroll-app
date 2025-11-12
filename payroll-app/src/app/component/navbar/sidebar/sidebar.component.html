@@ -3,7 +3,7 @@
   <div class="sidebar-header">
     <div class="logo">
       <i class="bi bi-safe"></i>
-      <span class="logo-text">My-Task</span>
+      <span class="logo-text">LKC</span>
     </div>
   </div>
 
@@ -27,7 +27,7 @@
         <div *ngFor="let child of item.children"
              class="submenu-item"
              [class.active]="child.route && isActive(child.route)"
-             (click)="toggleMenu(child)">
+             (click)="onChildClick($event, child)">
           <i class="bi" [ngClass]="child.icon"></i>
           <span>{{ child.label }}</span>
         </div>

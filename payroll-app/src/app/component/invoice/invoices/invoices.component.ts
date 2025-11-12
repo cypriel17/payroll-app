@@ -6,7 +6,7 @@ import { CustomHttpResponse, Page } from 'src/app/interface/appstates';
 import { InvoiceModel } from 'src/app/component/invoice/invoice.model';
 import { State } from 'src/app/interface/state';
 import { UserModel } from 'src/app/component/profile/user.model';
-import { CustomerService } from 'src/app/component/customer/customer.service';
+import { CustomerService } from 'src/app/service/customer.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Employee, EmployeeForm, Department, Designation } from './employee.model';
-import { CustomHttpResponse, Page, EmployeeState } from '../../interface/appstates';
-import { UserModel } from '../profile/user.model';
-import { EmployeeStats } from '../../interface/employee-state';
+import { Employee, EmployeeForm, Department, Designation } from '../component/employee/employee.model';
+import { CustomHttpResponse, Page, EmployeeState } from '../interface/appstates';
+import { UserModel } from '../component/profile/user.model';
+import { EmployeeStats } from '../interface/employee-state';
 
 @Injectable({
   providedIn: 'root'

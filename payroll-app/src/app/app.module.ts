@@ -11,9 +11,20 @@ import { InvoiceModule } from './component/invoice/invoice.module';
 import { EmployeeModule } from './component/employee/employee.module';
 import { NotificationModule } from './notification.module';
 import { NavBarModule } from './component/navbar/navbar.module';
+import { AttendanceListComponent } from './component/attendance/attendance-list/attendance-list.component';
+import { EditAttendanceModalComponent } from './component/attendance/edit-attendance-modal/edit-attendance-modal.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {EmployeeLeaveComponent} from "./component/leave/employee-leave/employee-leave.component";
+import {AdminLeaveComponent} from "./component/leave/admin-leave/admin-leave.component";
+
 
 @NgModule({
-  declarations: [ AppComponent ],
+  declarations: [ AppComponent,
+    AttendanceListComponent,
+    EditAttendanceModalComponent,
+    EmployeeLeaveComponent,
+    AdminLeaveComponent
+  ],
   imports: [
     BrowserModule,
     CoreModule,
@@ -24,7 +35,9 @@ import { NavBarModule } from './component/navbar/navbar.module';
     HomeModule,
     NavBarModule,
     AppRoutingModule,
-    NotificationModule
+    NotificationModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   bootstrap: [AppComponent]
 })

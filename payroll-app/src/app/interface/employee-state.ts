@@ -18,3 +18,6 @@ export interface EmployeeStats {
   onLeaveEmployees?: number;
   newHiresThisMonth?: number;
 }
+
+export { Employee };
+

@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject, map, startWith, catchError, of, switchMap 
 import { DataState } from 'src/app/enum/datastate.enum';
 import { CustomHttpResponse, EmployeeState } from 'src/app/interface/appstates';
 import { State } from 'src/app/interface/state';
-import { EmployeeService } from '../employee.service';
+import { EmployeeService } from '../../../service/employee.service';
 import { NotificationService } from 'src/app/service/notification.service';
 import { NgForm } from '@angular/forms';
 import { EmployeeForm } from '../employee.model';

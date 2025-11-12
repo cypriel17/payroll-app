@@ -7,7 +7,7 @@ import { CustomHttpResponse, Page } from 'src/app/interface/appstates';
 import { Employee } from '../employee.model';
 import { State } from 'src/app/interface/state';
 import { UserModel } from 'src/app/component/profile/user.model';
-import { EmployeeService } from '../employee.service';
+import { EmployeeService } from '../../../service/employee.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({

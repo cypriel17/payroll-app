@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { CustomHttpResponse, CustomerState, Page, Profile } from '../../interface/appstates';
-import { UserModel } from '../profile/user.model';
-import { Key } from '../../enum/key.enum';
-import { Stats } from '../../interface/stats';
-import { CustomerModel } from './customer.model';
-import { InvoiceModel } from '../invoice/invoice.model';
+import { CustomHttpResponse, CustomerState, Page, Profile } from '../interface/appstates';
+import { UserModel } from '../component/profile/user.model';
+import { Key } from '../enum/key.enum';
+import { Stats } from '../interface/stats';
+import { CustomerModel } from '../component/customer/customer.model';
+import { InvoiceModel } from '../component/invoice/invoice.model';
 
 @Injectable()
 export class CustomerService {

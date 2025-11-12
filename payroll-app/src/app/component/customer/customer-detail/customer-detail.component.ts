@@ -7,7 +7,7 @@ import { DataState } from 'src/app/enum/datastate.enum';
 import { CustomHttpResponse, CustomerState, Page } from 'src/app/interface/appstates';
 import { State } from 'src/app/interface/state';
 import { UserModel } from 'src/app/component/profile/user.model';
-import { CustomerService } from 'src/app/component/customer/customer.service';
+import { CustomerService } from 'src/app/service/customer.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({

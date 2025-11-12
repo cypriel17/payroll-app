@@ -8,7 +8,7 @@ import { CustomerModel } from 'src/app/component/customer/customer.model';
 import { State } from 'src/app/interface/state';
 import { Stats } from 'src/app/interface/stats';
 import { UserModel } from 'src/app/component/profile/user.model';
-import { CustomerService } from 'src/app/component/customer/customer.service';
+import { CustomerService } from 'src/app/service/customer.service';
 import { saveAs } from 'file-saver';
 import { NotificationService } from 'src/app/service/notification.service';
 
