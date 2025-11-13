@@ -12,7 +12,7 @@ import { DepartmentState } from '../interface/department-state';
   providedIn: 'root'
 })
 export class DepartmentService {
-  private readonly apiUrl = 'http://localhost:8080/api/v1/departments';
+  private readonly apiUrl = 'http://localhost:8081/departments';
 
   // State management
   private departmentStateSubject = new BehaviorSubject<DepartmentState>({

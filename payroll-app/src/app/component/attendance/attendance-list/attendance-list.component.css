@@ -101,7 +101,7 @@
   justify-content: center;
   border-radius: 0.5rem;
   border: 1px solid #ddd;
-  background: white;
+  background: #385bd7;
   cursor: pointer;
   transition: all 0.3s ease;
 }

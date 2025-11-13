@@ -7,7 +7,7 @@ import {
   HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError } from 'rxjs';
 import { Key } from '../enum/key.enum';
 import { UserService } from '../service/user.service';
 import { CustomHttpResponse, Profile } from '../interface/appstates';
@@ -19,15 +19,17 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor(private userService: UserService) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> | Observable<HttpResponse<unknown>>{
-    if(request.url.includes('verify') || request.url.includes('login') || request.url.includes('register') 
-            || request.url.includes('refresh') || request.url.includes('resetpassword')) {
-          return next.handle(request);
-      }
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Skip adding token for authentication endpoints
+    if (request.url.includes('verify') || request.url.includes('login') || request.url.includes('register')
+      || request.url.includes('refresh') || request.url.includes('resetpassword')) {
+      return next.handle(request);
+    }
+
     return next.handle(this.addAuthorizationTokenHeader(request, localStorage.getItem(Key.TOKEN)))
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if(error instanceof HttpErrorResponse && error.status === 401 && error.error.reason.includes('expired')) {
+          if (error instanceof HttpErrorResponse && error.status === 401 && error.error.reason?.includes('expired')) {
             return this.handleRefreshToken(request, next);
           } else {
             return throwError(() => error);
@@ -37,10 +39,11 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   private handleRefreshToken(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if(!this.isTokenRefreshing) {
+    if (!this.isTokenRefreshing) {
       console.log('Refreshing Token...');
       this.isTokenRefreshing = true;
       this.refreshTokenSubject.next(null);
+
       return this.userService.refreshToken$().pipe(
         switchMap((response) => {
           console.log('Token Refresh Response:', response);
@@ -48,19 +51,37 @@ export class TokenInterceptor implements HttpInterceptor {
           this.refreshTokenSubject.next(response);
           console.log('New Token:', response.data.access_token);
           console.log('Sending original request:', request);
-          return next.handle(this.addAuthorizationTokenHeader(request, response.data.access_token))
+
+          // Save new token
+          localStorage.setItem(Key.TOKEN, response.data.access_token);
+
+          return next.handle(this.addAuthorizationTokenHeader(request, response.data.access_token));
+        }),
+        catchError((error) => {
+          this.isTokenRefreshing = false;
+          console.error('Token refresh failed:', error);
+          // Redirect to login or handle token refresh failure
+          this.userService.logOut();
+          return throwError(() => error);
         })
       );
     } else {
-      this.refreshTokenSubject.pipe(
+      // Wait for the token to be refreshed
+      return this.refreshTokenSubject.pipe(
+        filter(response => response !== null),
+        take(1),
         switchMap((response) => {
-          return next.handle(this.addAuthorizationTokenHeader(request, response.data.access_token))
+          return next.handle(this.addAuthorizationTokenHeader(request, response.data.access_token));
         })
-        )
+      );
     }
   }
 
   private addAuthorizationTokenHeader(request: HttpRequest<unknown>, token: string): HttpRequest<any> {
-    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` }});
+    return request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 }
