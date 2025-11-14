@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable()
 export class NotificationService {
@@ -25,7 +26,7 @@ export class NotificationService {
         this.notifier.notify(Type.WARNING, message);
     }
 
-    onError(message: string): void {
+  onError(message: string): void {
         this.notifier.notify(Type.ERROR, message);
     }
 }

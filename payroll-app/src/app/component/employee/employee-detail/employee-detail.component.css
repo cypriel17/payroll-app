@@ -14,7 +14,6 @@
   flex-wrap: wrap;
 }
 
-/* Profile Avatar Section */
 .profile-avatar-section {
   flex-shrink: 0;
 }
@@ -74,11 +73,6 @@
   transform: scale(1.1);
 }
 
-.upload-photo-btn i {
-  font-size: 18px;
-}
-
-/* Profile Info Section */
 .profile-info-section {
   flex: 1;
   min-width: 250px;
@@ -111,13 +105,6 @@
   border-radius: 20px;
 }
 
-/* Profile Actions */
-.profile-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
 .profile-actions .btn {
   background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -126,20 +113,9 @@
   transition: all 0.3s ease;
 }
 
-.profile-actions .btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-}
-
 .profile-actions .btn-outline-danger {
   background: rgba(220, 53, 69, 0.2);
   border-color: rgba(220, 53, 69, 0.4);
-}
-
-.profile-actions .btn-outline-danger:hover {
-  background: rgba(220, 53, 69, 0.4);
-  border-color: rgba(220, 53, 69, 0.6);
 }
 
 /* Tabs */
@@ -167,15 +143,6 @@
   border-bottom: 3px solid #667eea;
 }
 
-.nav-tabs .nav-link i {
-  margin-right: 6px;
-}
-
-/* Tab Content */
-.tab-content {
-  margin-top: 20px;
-}
-
 /* Card Styling */
 .card {
   border: none;
@@ -187,19 +154,6 @@
   color: #2c3e50;
   font-weight: 700;
   font-size: 20px;
-}
-
-.card-body label {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 5px;
-}
-
-.card-body p {
-  margin-bottom: 0;
-  color: #2c3e50;
 }
 
 /* Form Styling */
@@ -223,11 +177,6 @@
   box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
 }
 
-textarea.form-control {
-  resize: vertical;
-  min-height: 100px;
-}
-
 /* Buttons */
 .btn {
   padding: 10px 24px;
@@ -246,85 +195,111 @@ textarea.form-control {
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
-.btn-secondary {
-  background: #6c757d;
-  border: none;
+/* ========== DOCUMENT STYLES ========== */
+
+.upload-section {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px dashed #dee2e6;
 }
 
-.btn-secondary:hover {
-  background: #5a6268;
+.document-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.document-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
-/* Breadcrumb */
-.breadcrumb {
-  background-color: transparent;
-  padding: 0;
-  margin-bottom: 0;
+.document-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.breadcrumb-item a {
+.document-icon {
+  font-size: 32px;
   color: #667eea;
-  text-decoration: none;
-  transition: color 0.2s ease;
 }
 
-.breadcrumb-item a:hover {
-  color: #764ba2;
-  text-decoration: underline;
+.document-body {
+  flex: 1;
 }
 
-.breadcrumb-item.active {
+.document-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document-info {
+  font-size: 12px;
   color: #6c757d;
+  margin-bottom: 8px;
 }
 
-/* Responsive Design */
+.document-description {
+  font-size: 12px;
+  color: #495057;
+  font-style: italic;
+}
+
+.document-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e9ecef;
+}
+
+.document-actions .btn {
+  flex: 1;
+  padding: 6px 12px;
+}
+
+.progress {
+  height: 25px;
+}
+
+.progress-bar {
+  font-size: 0.875rem;
+  line-height: 25px;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .profile-header {
     flex-direction: column;
     text-align: center;
   }
 
-  .profile-avatar-section {
-    margin: 0 auto;
-  }
-
   .employee-name {
     font-size: 24px;
-  }
-
-  .employee-title {
-    font-size: 16px;
-  }
-
-  .profile-actions {
-    justify-content: center;
-    width: 100%;
   }
 
   .nav-tabs .nav-link {
     padding: 10px 16px;
     font-size: 14px;
   }
+
+  .document-card {
+    margin-bottom: 1rem;
+  }
 }
 
-/* Utility Classes */
 hr {
   border-top: 2px solid #e9ecef;
   margin: 25px 0;
-}
-
-.fw-bold {
-  font-weight: 600 !important;
-}
-
-.text-muted {
-  color: #6c757d !important;
-}
-
-/* Loading State */
-.spinner-border-sm {
-  width: 1rem;
-  height: 1rem;
-  border-width: 0.2em;
 }

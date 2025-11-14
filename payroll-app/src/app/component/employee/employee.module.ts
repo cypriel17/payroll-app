@@ -13,7 +13,7 @@ import { EmployeeService } from '../../service/employee.service';
   declarations: [
     EmployeesComponent,
     NewemployeeComponent,
-    EmployeeDetailComponent
+    EmployeeDetailComponent,
   ],
   imports: [
     CommonModule,
