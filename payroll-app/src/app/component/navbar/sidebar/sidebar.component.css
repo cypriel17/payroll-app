@@ -9,15 +9,35 @@
   flex-direction: column;
   z-index: 1000;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
 }
 
 /* Logo Section */
 .sidebar-header {
-  padding: 25px 20px;
+  padding: 20px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.logo-image {
+  max-width: 180px;
+  height: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+/* Alternative: Logo with icon */
+.logo-with-icon {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -25,7 +45,7 @@
   cursor: pointer;
 }
 
-.logo i {
+.logo-with-icon i {
   font-size: 1.8rem;
   background: white;
   color: #06b6d4;
@@ -35,11 +55,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.logo-text {
-  font-size: 1.3rem;
-  font-weight: 700;
+.logo-with-icon .logo-image {
+  height: 35px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Menu Section */
@@ -84,11 +106,13 @@
   flex: 1;
   font-size: 0.95rem;
   font-weight: 500;
+  transition: opacity 0.3s ease;
 }
 
 .expand-icon {
   font-size: 0.8rem;
   margin-left: auto;
+  transition: opacity 0.3s ease;
 }
 
 /* Submenu */
@@ -121,6 +145,10 @@
 
 .submenu-item i {
   font-size: 1rem;
+}
+
+.submenu-item span {
+  transition: opacity 0.3s ease;
 }
 
 /* Footer */
@@ -166,4 +194,139 @@
 
 .sidebar-menu::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar-header {
+    padding: 20px 10px;
+  }
+
+  .logo-image {
+    max-width: 45px;
+  }
+
+  .logo-with-icon .logo-image {
+    display: none;
+  }
+
+  .logo-text,
+  .menu-label,
+  .expand-icon,
+  .submenu-item span {
+    display: none;
+  }
+
+  .menu-item {
+    justify-content: center;
+    padding: 15px 10px;
+  }
+
+  .menu-item i,
+  .submenu-item i {
+    margin: 0;
+    font-size: 1.4rem;
+    width: auto;
+  }
+
+  .submenu-item {
+    justify-content: center;
+    padding: 12px 10px;
+  }
+
+  .menu-item.active {
+    border-left: none;
+    border-top: 4px solid white;
+  }
+
+  .submenu-item.active {
+    border-left: none;
+    border-top: 3px solid white;
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .logo-image {
+    max-width: 150px;
+  }
+
+  .logo-with-icon .logo-image {
+    height: 30px;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  .logo-image {
+    max-width: 200px;
+  }
+
+  .logo-with-icon .logo-image {
+    height: 40px;
+  }
+}
+
+/* Alternative compact logo for mobile */
+.logo-compact {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .logo-full {
+    display: none;
+  }
+
+  .logo-compact {
+    display: block;
+    max-width: 40px;
+    height: auto;
+  }
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Smooth transitions for all interactive elements */
+.menu-item,
+.submenu-item,
+.back-button,
+.logo-image {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects for logo */
+.logo:hover .logo-image {
+  transform: scale(1.05);
+}
+
+.logo-with-icon:hover .logo-image {
+  transform: scale(1.05);
+}
+
+/* Focus states for accessibility */
+.menu-item:focus,
+.submenu-item:focus,
+.back-button:focus,
+.logo:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
 }

@@ -26,16 +26,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: 'bi-house-door', route: '/' },
     {
+      label: 'Organization', icon: 'bi-building', expanded: false, children: [
+        { label: 'Departments', icon: 'bi-diagram-3', route: '/departments' },
+        { label: 'Designations', icon: 'bi-award', route: '/departments' }
+      ]
+    },
+    {
       label: 'Employees', icon: 'bi-people-fill', expanded: false, children: [
         { label: 'Members', icon: 'bi-person-badge', route: '/employee/employees' },
         { label: 'Members Profile', icon: 'bi-person-circle', route: '/employee/employees' },
-        { label: 'Holidays', icon: 'bi-calendar-event', route: '/holidays' },
         { label: 'Attendance', icon: 'bi-calendar3', route: '/attendance' },
-        { label: 'Department', icon: 'bi-building', route: '/departments' }
       ]
     },
     {
       label: 'Leave Request', icon: 'bi-calendar-x', expanded: false, children: [
+        { label: 'Holidays', icon: 'bi-calendar-event', route: '/holidays' },
         { label: 'My Leave', icon: 'bi-calendar-plus', route: '/employee/leave' },
         { label: 'Manage Leave', icon: 'bi-calendar-check', route: '/admin/leave' }
       ]
@@ -62,6 +67,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     {
       label: 'Notifications', icon: 'bi-bell', children: [
         { label: 'Inbox', icon: 'bi-bell', route: '/notifications' },
+
       ]
     },
     {
