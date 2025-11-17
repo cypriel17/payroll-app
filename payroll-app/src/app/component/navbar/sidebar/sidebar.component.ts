@@ -58,6 +58,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
       ]
     },
     {
+      label: 'Expense Claims', icon: 'bi-receipt-cutoff', expanded: false, children: [
+        { label: 'My Claims', icon: 'bi-file-earmark-text', route: '/expense-claims/employee' },
+        { label: 'Manage Claims', icon: 'bi-clipboard-check', route: '/expense-claims/admin' }
+      ]
+    },
+    {
       label: 'Payroll', icon: 'bi-cash-coin', expanded: false, children: [
         { label: 'Employee Salary', icon: 'bi-cash-coin', route: '/payroll/salary' },
         { label: 'Payslips', icon: 'bi-file-earmark-text', route: '/payroll/payslips' },

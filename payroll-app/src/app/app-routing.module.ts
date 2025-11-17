@@ -25,6 +25,11 @@ const routes: Routes = [
     component: AttendanceListComponent
   },
   {
+    path: 'expense-claims',
+    loadChildren: () => import('./component/expense-claims/expense-claims.module')
+      .then(m => m.ExpenseClaimsModule)
+  },
+  {
     path: 'departments',
     loadChildren: () => import('./component/department/department.module')
       .then(m => m.DepartmentModule)
